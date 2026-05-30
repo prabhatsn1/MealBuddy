@@ -587,14 +587,14 @@ Coverage collection is configured for `lib/**/*.ts`, `data/**/*.ts`, and `hooks/
 
 | Area | Limitation |
 |---|---|
-| **Location** | Hardcoded default coordinates (New Delhi). The app does not request GPS permission or detect the user's actual location. |
+| **Location** | The app requests foreground GPS permission and uses the device's actual coordinates. Falls back to configurable default coordinates (New Delhi) if permission is denied. |
 | **Platform APIs** | Swiggy's dapi and Zomato/Uber Eats via RapidAPI are unofficial or rate-limited. Data quality and availability are not guaranteed. |
 | **Uber Eats pricing** | The Uber Eats API does not expose per-item prices in search results. Prices are synthetically derived from result position (`150 + index * 20`), making them inaccurate for comparison. |
 | **Zomato pricing** | Uses "cost for two ÷ 2" as a per-meal estimate, which may not reflect the actual price of the searched dish. |
 | **AI key in bundle** | `EXPO_PUBLIC_OPENAI_API_KEY` is embedded in the app binary — unsuitable for public release. |
 | **Authentication scope** | Platform auth only enables search; it does not integrate with checkout, order tracking, or loyalty programmes. |
 | **Web support** | The app targets web (`expo start --web`) but WebView-based features (hidden session WebViews) will not function in a browser environment. |
-| **No GPS / delivery address** | Delivery address is not captured. All distance/time data comes from the platform APIs based on default coordinates. |
+| **No GPS / delivery address** | Delivery address is captured via reverse geocoding of the device's GPS position and displayed on the results screen. All distance/time data comes from the platform APIs based on current coordinates. |
 | **History not synced** | Order history and preferences are device-local; reinstalling the app loses all data. |
 | **No real-time updates** | Results are fetched once per search. There is no live price or availability update. |
 
