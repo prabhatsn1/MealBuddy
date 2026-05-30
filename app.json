@@ -19,7 +19,12 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ],
+      "package": "com.prabhatsn3.MealBuddy"
     },
     "web": {
       "output": "static",
@@ -46,11 +51,20 @@
         }
       ],
       "expo-secure-store",
-      ["expo-notifications", {}]
+      [
+        "expo-notifications",
+        {}
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "01fa38ae-4f3f-4e72-9ea1-6458cc4e1627"
+      }
     }
   }
 }
