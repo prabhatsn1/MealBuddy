@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     FlatList,
@@ -17,6 +17,7 @@ import { Brand, Colors, Radii, Spacing, Typography } from '@/constants/theme';
 import { usePlatformAuth } from '@/context/platform-auth-context';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useHistory } from '@/hooks/use-history';
+import { useLocation } from '@/hooks/use-location';
 import { usePreferences } from '@/hooks/use-preferences';
 import { generateAIExplanation } from '@/lib/ai/explanation-engine';
 import { DataSource, PlatformStatus, searchAllPlatforms } from '@/lib/api/food-aggregator';
@@ -36,16 +37,20 @@ export default function ResultsScreen() {
   const { searchViaWebView } = usePlatformAuth();
   const { addSearch, addRecommendation, favouriteCuisines } = useHistory();
 
+  const locationState = useLocation();
+
   const [fetchState, setFetchState] = useState<FetchState>({ status: 'loading' });
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
 
   const loadResults = useCallback(async () => {
+    if (locationState.status === 'loading') return;
     setFetchState({ status: 'loading' });
     try {
+      const { lat, lng } = locationState.coords;
       const { results, platformStatus } = await searchAllPlatforms(
         food ?? '',
-        undefined,
-        undefined,
+        lat,
+        lng,
         searchViaWebView,
       );
       if (results.length === 0) {
@@ -66,7 +71,7 @@ export default function ResultsScreen() {
     } catch {
       setFetchState({ status: 'error', reason: 'unknown' });
     }
-  }, [food, mode, preferences, searchViaWebView, addSearch, addRecommendation]);
+  }, [food, mode, preferences, searchViaWebView, addSearch, addRecommendation, locationState]);
 
   useEffect(() => {
     loadResults();
@@ -137,6 +142,13 @@ export default function ResultsScreen() {
                   {capitalize(food ?? '')}
                 </Text>
               </Text>
+              {locationState.status !== 'loading' && locationState.address ? (
+                <View style={styles.addressChip}>
+                  <Text style={styles.addressChipText} numberOfLines={1}>
+                    📍 {locationState.address}
+                  </Text>
+                </View>
+              ) : null}
               {filtersApplied && (
                 <View style={styles.filterBadge}>
                   <Text style={styles.filterBadgeText}>
@@ -244,6 +256,20 @@ const styles = StyleSheet.create({
     ...Typography.caption1,
     color: Brand.primary,
     fontWeight: '700',
+  },
+  addressChip: {
+    marginTop: Spacing.xs,
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    borderRadius: Radii.full,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 3,
+    backgroundColor: 'rgba(0,0,0,0.06)',
+    maxWidth: 260,
+  },
+  addressChipText: {
+    ...Typography.caption1,
+    color: '#555',
   },
   sectionHeading: {
     ...Typography.overline,
