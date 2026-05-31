@@ -1,7 +1,7 @@
 import { ScalePressable } from '@/components/ui/animated-pressable';
 import { Brand, Radii, Shadows, Spacing } from '@/constants/theme';
 import { useThemeColors } from '@/hooks/use-theme-color';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import {
     StyleSheet,
     Text,
@@ -22,7 +22,6 @@ interface FoodSearchBarProps {
 
 export function FoodSearchBar({ value, onChangeText, onSubmit }: FoodSearchBarProps) {
   const inputRef = useRef<TextInput>(null);
-  const [isFocused, setIsFocused] = useState(false);
   const focusAnim = useSharedValue(0);
   const colors = useThemeColors();
 
@@ -36,12 +35,10 @@ export function FoodSearchBar({ value, onChangeText, onSubmit }: FoodSearchBarPr
   }));
 
   function handleFocus() {
-    setIsFocused(true);
     focusAnim.value = withSpring(1, { damping: 20, stiffness: 300 });
   }
 
   function handleBlur() {
-    setIsFocused(false);
     focusAnim.value = withSpring(0, { damping: 20, stiffness: 300 });
   }
 
