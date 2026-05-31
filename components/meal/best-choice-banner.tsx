@@ -122,7 +122,7 @@ export function BestChoiceBanner({
       )}
 
       {/* ── Order preview header ── */}
-      <Text style={styles.previewLabel}>🤖 This is what I'd order for you</Text>
+      <Text style={styles.previewLabel}>🤖 This is what I&apos;d order for you</Text>
       <View style={styles.headingRow}>
         <Text style={styles.heading}>Best pick for you!</Text>
         {/* Confidence badge */}
