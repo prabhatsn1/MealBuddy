@@ -2,13 +2,13 @@ import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
-    Alert,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Switch,
-    Text,
-    View,
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
 } from 'react-native';
 
 import { ScalePressable } from '@/components/ui/animated-pressable';
@@ -270,7 +270,7 @@ export default function PreferencesScreen() {
               CONFIDENCE THRESHOLD
             </Text>
             <Text style={[styles.presetHint, { color: theme.textSecondary, marginBottom: Spacing.sm }]}>
-              Show "Ready to Order?" only when MealBuddy is at least this confident
+              Show &quot;Ready to Order?&quot; only when MealBuddy is at least this confident
             </Text>
             <View style={[styles.card, { backgroundColor: theme.card, ...Shadows.md }]}>
               {CONFIDENCE_PRESETS.map(({ label, value, description }, i) => {
@@ -311,7 +311,7 @@ export default function PreferencesScreen() {
               AUTO-ORDER THRESHOLD
             </Text>
             <Text style={[styles.presetHint, { color: theme.textSecondary, marginBottom: Spacing.sm }]}>
-              When the best pick is under this price, the "Ready to Order?" button is pre-armed automatically
+              When the best pick is under this price, the &quot;Ready to Order?&quot; button is pre-armed automatically
             </Text>
             <View style={styles.presetRow}>
               {AUTO_ORDER_PRESETS.map(({ label, value }) => {
@@ -386,7 +386,8 @@ export default function PreferencesScreen() {
 
         {/* ── Active Filters Summary ── */}
         {(preferences.maxPrice > 0 || preferences.minRating > 0) && (
-          <FadeIn index={7}>>
+          <FadeIn index={7}>
+            <View style={[styles.summaryCard, { backgroundColor: theme.card, ...Shadows.md }]}>
               <Text style={[styles.summaryTitle, { color: Brand.primary }]}>Active Filters</Text>
               {preferences.maxPrice > 0 && (
                 <Text style={[styles.summaryItem, { color: theme.text }]}>
