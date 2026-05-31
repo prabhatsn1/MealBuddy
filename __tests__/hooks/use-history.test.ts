@@ -39,9 +39,11 @@ function makeEntry(
   explanation: string,
   overrides: Partial<RecommendationHistoryEntry> = {},
 ): RecommendationHistoryEntry {
+  const winner = overrides.winner ?? makeWinner();
   return {
     query: 'biryani',
-    winner: makeWinner(),
+    winner,
+    cuisine: overrides.cuisine ?? winner.cuisine,
     mode: 'balanced' as DecisionMode,
     confidence: 'high' as Confidence,
     explanation,
