@@ -1,13 +1,13 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    FlatList,
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import Animated, { FadeIn as RNFadeIn } from 'react-native-reanimated';
 
@@ -71,7 +71,7 @@ export default function ResultsScreen() {
     } catch {
       setFetchState({ status: 'error', reason: 'unknown' });
     }
-  }, [food, mode, preferences, searchViaWebView, addSearch, addRecommendation, locationState]);
+  }, [food, mode, preferences, searchViaWebView, addSearch, addRecommendation, locationState, favouriteCuisines]);
 
   useEffect(() => {
     loadResults();
@@ -103,7 +103,7 @@ export default function ResultsScreen() {
           </View>
           <Text style={[styles.emptyHeading, { color: theme.text }]}>Kuch mila nahi yaar</Text>
           <Text style={[styles.emptySub, { color: theme.textSecondary }]}>
-            "{food}" ke liye koi restaurant nahi mila.{'\n'}Biryani, Pizza, Burger, Dosa ya Rolls try karo!
+            &quot;{food}&quot; ke liye koi restaurant nahi mila.{"\n"}Biryani, Pizza, Burger, Dosa ya Rolls try karo!
           </Text>
           <TouchableOpacity onPress={loadResults} style={styles.retryButton}>
             <Text style={styles.retryText}>Retry</Text>
